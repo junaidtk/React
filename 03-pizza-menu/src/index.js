@@ -104,16 +104,16 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
-  if (props.pizzaObj.soldOut) return null;
+function Pizza({ pizzaObj }) {
+  if (pizzaObj.soldOut) return null;
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p1>{props.pizzaObj.ingredients}</p1>
-        <span>{props.pizzaObj.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p1>{pizzaObj.ingredients}</p1>
+        <span>{pizzaObj.price + 3}</span>
       </div>
     </li>
   );
@@ -133,12 +133,7 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>
-            We are open until {closeHour}:00. Come and visit us or order online.
-          </p>
-          <button className="btn">Order</button>
-        </div>
+        <Order closeHour={closeHour} />
       ) : (
         <p>
           We are happy to welcome you between {openHour}:00 and {closeHour}:00.
@@ -149,6 +144,16 @@ function Footer() {
   //return React.createElement("footer", null, "We are Currenlty Open");
 }
 
+function Order({ closeHour }) {
+  return (
+    <div className="order">
+      <p>
+        We are open until {closeHour}:00. Come and visit us or order online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
 // React version 18 above
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

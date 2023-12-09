@@ -8,6 +8,7 @@ const messages = [
 
 export default function App() {
   const [step, setStep] = useState(1);
+  const [test, setTest] = useState({name:'Junaid'});
 
   function handlePrevious() {
     if (step > 1) setStep(step - 1);
@@ -15,6 +16,11 @@ export default function App() {
 
   function handleNext() {
     if (step < 3) setStep(step + 1);
+
+    // We can do without using the setTest, but it is not recommended. it is a bad practice
+    // test.name = 'junu';
+
+    setTest({name:'Junu'});
   }
 
   // const step = 1;
@@ -28,6 +34,7 @@ export default function App() {
 
       <p className="message">
         Step {step} : {messages[step - 1]}{" "}
+        {test.name}
       </p>
 
       <div className="buttons">

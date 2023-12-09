@@ -12,11 +12,14 @@ export default function App() {
   const [isOpen, setIsOpen] = useState(true);
 
   function handlePrevious() {
-    if (step > 1) setStep(step - 1);
+    if (step > 1) setStep( (s) => step - 1);
   }
 
   function handleNext() {
-    if (step < 3) setStep(step + 1);
+    if (step < 3){
+      setStep((s) => step + 1);
+      setStep((s) => step + 1);
+    } 
 
     // We can do without using the setTest, but it is not recommended. it is a bad practice
     // test.name = 'junu';
@@ -27,7 +30,7 @@ export default function App() {
   // const step = 1;
   return (
     <div>
-      <button className="close" onClick={() => setIsOpen(!isOpen)}>&times;</button>
+      <button className="close" onClick={() => setIsOpen((is) => !is)}>&times;</button>
       {isOpen && (
         <div className="steps">
         <div className="numbers">

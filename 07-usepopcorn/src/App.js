@@ -61,13 +61,22 @@ export default function App() {
         <Results movies={movies}/>
       </Navbar>
       <Main movies={movies}>
-        <Box >
+        {/* Not a prefered method */}
+        <Box element={<MovieList movies={movies} />} />
+
+        <Box element={<>
+          <WatchedSummary watched={watched}/>
+          <WatchedList watched={watched} />
+          </>
+        } />
+
+        {/* <Box >
           <MovieList movies={movies} />
         </Box>
         <Box >
           <WatchedSummary watched={watched}/>
           <WatchedList watched={watched} />
-        </Box>
+        </Box> */}
       </Main>
     </>
   );
@@ -144,7 +153,7 @@ function WatchedMovie({movie}){
   );
 }
 
-function Box({children}){
+function Box({element}){
   const [isOpen, setIsOpen] = useState(true);
 
   return(
@@ -155,7 +164,7 @@ function Box({children}){
       >
         {isOpen ? "–" : "+"}
       </button>
-      {isOpen && children}
+      {isOpen && element}
     </div>
   );
 }

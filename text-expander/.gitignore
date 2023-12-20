@@ -2,8 +2,6 @@
 
 # dependencies
 /node_modules
-03-pizza-menu/node_modules
-08-how-react-works/node_modules
 /.pnp
 .pnp.js
 

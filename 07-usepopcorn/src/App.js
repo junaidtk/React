@@ -51,12 +51,15 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const KEY = 'd0d22639'; 
+// const query = 'interstellar';
+const query = 'fgdfgsdg';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
 
   const [isLoading, SetIsLoading] = useState(false);
+  const [error, SetError] = useState("");
 
   // useEffect( function(){
   //   fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
@@ -66,12 +69,28 @@ export default function App() {
 
   useEffect(function(){
       async function fetchMovies(){
-        SetIsLoading(true);
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`);
-        const data = await res.json();
-        setMovies(data.Search);
-        console.log(data.Search);
-        SetIsLoading(false);
+
+        try{
+          SetIsLoading(true);
+          const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+
+          if(!res.ok)
+            throw new Error('Something went wrong with fetching movies');
+
+          const data = await res.json();
+
+          if(data.Response === false) throw new Error('Movie Not Found');
+      
+          setMovies(data.Search);
+          console.log(data.Search);
+          
+        } catch(err){ 
+          console.log(err);
+          SetError(err.message)
+        } finally{
+          SetIsLoading(false);
+        }
+        
       };
       fetchMovies();
     }, []);
@@ -84,7 +103,10 @@ export default function App() {
       </Navbar>
       <Main movies={movies}>
         <Box >
-          {isLoading ? <Loader /> : <MovieList movies={movies} />}
+          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+          {isLoading && <Loader />}
+          {!isLoading && !error &&  <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
         <Box >
           <WatchedSummary watched={watched}/>
@@ -98,6 +120,12 @@ export default function App() {
 function Loader(){
   return(
     <p className="loader">Loading...</p>
+  );
+}
+
+function ErrorMessage({message}){
+  return(
+    <p className="error">{message}</p>
   );
 }
 

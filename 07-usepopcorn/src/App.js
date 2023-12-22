@@ -300,8 +300,6 @@ function MovieDetails({ selectedId, onCloseMovie }) {
     Genre: genre,
   } = movie;
 
-  console.log(poster);
-
   useEffect(
     function () {
       async function getmovieDetails() {
@@ -319,6 +317,14 @@ function MovieDetails({ selectedId, onCloseMovie }) {
       getmovieDetails();
     },
     [selectedId]
+  );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `Movie | ${title}`;
+    },
+    [title]
   );
 
   return (
